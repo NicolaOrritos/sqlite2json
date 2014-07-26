@@ -1,0 +1,42 @@
+{
+  "name": "sqlite2json",
+  "version": "0.1.0",
+  "main": "lib/sqlite2json.js",
+  "description": "The best module ever.",
+  "homepage": "https://github.com/NicolaOrritos/sqlite2json",
+  "bugs": "https://github.com/NicolaOrritos/sqlite2json/issues",
+  "author": {
+    "name": "Nicola Orritos",
+    "email": "nicola.orritos@gmail.com",
+    "url": "http://github.com/NicolaOrritos"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NicolaOrritos/sqlite2json"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "sqlite2json",
+    "sqlite",
+    "sqlite3",
+    "json"
+  ],
+  "dependencies": {
+    "pathrewrite": "",
+    "sqlite3": "^2.2.4"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "load-grunt-tasks": "^0.4.0",
+    "time-grunt": "^0.3.1",
+    "jshint-stylish": "^0.2.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  }
+}
