@@ -1,18 +1,12 @@
 # sqlite2json
 
-Map SQLite3 tables to JSON files in a configurable way.
+Map SQLite3 data to JSON in a configurable way.
 
+Please bear with me as this project is still in early development stage :-)
 
 ## Getting Started
 
-Install the module with: `npm install sqlite2json`
-
-```js
-var sqlite2json = require('sqlite2json');
-sqlite2json.awesome(); // "awesome"
-```
-
-
+_(Coming soon)_
 
 
 ## Documentation
