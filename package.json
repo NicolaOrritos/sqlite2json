@@ -26,6 +26,8 @@
   ],
   "dependencies": {
     "pathrewrite": "",
+    "restify": "^2.8.1",
+    "sjl": "^0.4.0",
     "sqlite3": "^2.2.4"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
-# sqlite2json [![Build Status](https://secure.travis-ci.org/NicolaOrritos/sqlite2json.png?branch=master)](http://travis-ci.org/NicolaOrritos/sqlite2json)
+# sqlite2json
 
-> The best module ever.
+Map SQLite3 tables to JSON files in a configurable way.
 
 
 ## Getting Started
@@ -10,14 +10,6 @@ Install the module with: `npm install sqlite2json`
 ```js
 var sqlite2json = require('sqlite2json');
 sqlite2json.awesome(); // "awesome"
-```
-
-Install with cli command
-
-```sh
-$ npm install -g sqlite2json
-$ sqlite2json --help
-$ sqlite2json --version
 ```
 
 
