@@ -1,27 +1,39 @@
 # sqlite2json
 
-Map SQLite3 data to JSON in a configurable way.
+Maps SQLite3 data to JSON by running multiple queries against the DB.
 
-Please bear with me as this project is still in early development stage :-)
 
 ## Getting Started
 
-_(Coming soon)_
+Install like this:
 
+```Bash
+npm install sqlite2json
+```
 
-## Documentation
+Use as follows:
 
-_(Coming soon)_
+```javascript
+var S2J = require('sqlite2json');
 
+var s2j = new S2J('/path/to/the/db.sqlite');
 
-## Examples
+s2j.addQuery('query', 'SELECT column FROM table');
 
-_(Coming soon)_
+s2j.run(function(err, json)
+{
+    if (err)
+    {
+        console.log('There was an error: %s', err);
+    }
+    else
+    {
+        console.log('Here is your JSON: %s', json);
 
-
-## Contributing
-
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com).
+        // Prints something like {"query": [{"column": "a"}, {"column": "b"}]}
+    }
+});
+```
 
 
 ## License
