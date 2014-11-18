@@ -32,12 +32,17 @@ exports.sqlite2json =
     
     'simple': function(test)
     {
+        // Test data created as follows:
+        /* CREATE TABLE foo(x INTEGER PRIMARY KEY ASC, y TEXT);
+           INSERT INTO foo(x, y) VALUES(12, "hello"); */
+        
+        
         test.expect(5);
         
         
-        var s2j = new S2J('/tmp/contents/export/test/catalog_web_production.sqlite');
+        var s2j = new S2J('test/test.sqlite');
         
-        s2j.addQuery('query1', 'SELECT * FROM issue');
+        s2j.addQuery('query1', 'SELECT * FROM foo');
         
         
         test.ok(s2j);
@@ -53,6 +58,32 @@ exports.sqlite2json =
             
             test.ok(data);
             test.ok(data.query1);
+            
+            test.done();
+        });
+    },
+    
+    'no queries': function(test)
+    {
+        test.expect(5);
+        
+        
+        var s2j = new S2J('test/test.sqlite');
+        
+        
+        test.ok(s2j);
+        
+        
+
+        s2j.run(function(err, json)
+        {
+            test.ifError(err);
+            test.ok(json);
+            
+            var data = JSON.parse(json);
+            
+            test.ok(data);
+            test.deepEqual(data, {});
             
             test.done();
         });
