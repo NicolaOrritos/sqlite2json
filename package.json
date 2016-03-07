@@ -1,6 +1,6 @@
 {
   "name": "sqlite2json",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "main": "lib/s2j.js",
   "description": "Map SQLite3 data to JSON in a configurable way",
   "homepage": "https://github.com/NicolaOrritos/sqlite2json",
@@ -25,7 +25,7 @@
     "json"
   ],
   "dependencies": {
-    "sqlite3": "^3.0.5"
+    "sqlite3": "^3.1.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "^0.10.0",
