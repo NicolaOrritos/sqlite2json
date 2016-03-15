@@ -1,6 +1,6 @@
 {
   "name": "sqlite2json",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "main": "lib/s2j.js",
   "description": "Map SQLite3 data to JSON in a configurable way",
   "homepage": "https://github.com/NicolaOrritos/sqlite2json",

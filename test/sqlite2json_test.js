@@ -34,8 +34,6 @@ describe('sqlite2json module', () =>
         s2j.run()
         .then( json =>
         {
-            console.log('Got the following final JSON: %s', json);
-
             assert.ok(json);
 
             const data = JSON.parse(json);
