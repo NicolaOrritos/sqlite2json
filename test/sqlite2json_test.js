@@ -1,92 +1,96 @@
 'use strict';
 
-var S2J = require('../lib/s2j.js');
+/* global describe */
+/* global it */
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
+const assert = require('assert');
+const S2J    = require('../lib/s2j.js');
 
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
-
-exports.sqlite2json =
+describe('sqlite2json module', () =>
 {
-    setUp: function(done)
+    // Test data created as follows:
+    /* CREATE TABLE foo(x INTEGER PRIMARY KEY ASC, y TEXT);
+       INSERT INTO foo(x, y) VALUES(12, "hello");
+       INSERT INTO foo(x, y) VALUES(13, "bye");
+
+       CREATE TABLE bar(w text PRIMARY KEY ASC, z INTEGER);
+       INSERT INTO bar(w, z) VALUES("good", 798);
+       INSERT INTO bar(w, z) VALUES("bad", 541); */
+
+    it('must retrieve various different combinations of JSON documents based on queries being performed on SQLite databases', done =>
     {
-        // setup here
-        done();
-    },
-
-    'simple': function(test)
-    {
-        // Test data created as follows:
-        /* CREATE TABLE foo(x INTEGER PRIMARY KEY ASC, y TEXT);
-           INSERT INTO foo(x, y) VALUES(12, "hello"); */
-
-
-        var s2j = new S2J('test/test.sqlite');
+        const s2j = new S2J('test/test.sqlite');
 
         s2j.addQuery('query1', 'SELECT * FROM foo');
+        s2j.addQuery('query2', 'SELECT x, y FROM foo');
+        s2j.addQuery('query3', 'SELECT x FROM foo');
+
+        s2j.addQuery('query4', 'SELECT w, z FROM bar WHERE z = 541');
 
 
-        test.ok(s2j);
+        assert.ok(s2j);
 
 
-
-        s2j.run(function(err, json)
+        s2j.run( (err, json) =>
         {
-            test.ifError(err);
-            test.ok(json);
+            console.log('Got the following final JSON: %s (error is "%s")', json, err);
 
-            var data = JSON.parse(json);
+            assert.ifError(err);
 
-            test.ok(data);
-            test.ok(data.query1);
+            assert.ok(json);
 
-            test.ok(data.query1[0]);
-            test.ok(data.query1[0].x === 12);
-            test.ok(data.query1[0].y === 'hello');
+            const data = JSON.parse(json);
 
-            test.done();
+            assert.ok(data);
+            assert.ok(data.query1);
+            assert.ok(data.query2);
+            assert.ok(data.query3);
+            assert.ok(data.query4);
+
+            assert.ok(data.query1[0]);
+            assert.ok(data.query1[0].x === 12);
+            assert.ok(data.query1[0].y === 'hello');
+            assert.ok(data.query1[1]);
+            assert.ok(data.query1[1].x === 13);
+            assert.ok(data.query1[1].y === 'bye');
+
+            assert.ok(data.query2[0]);
+            assert.ok(data.query2[0].x === 12);
+            assert.ok(data.query2[0].y === 'hello');
+            assert.ok(data.query2[1]);
+            assert.ok(data.query2[1].x === 13);
+            assert.ok(data.query2[1].y === 'bye');
+
+            assert.ok(data.query3[0]);
+            assert.ok(data.query3[0].x === 12);
+            assert.ok(data.query3[1]);
+            assert.ok(data.query3[1].x === 13);
+
+            assert.ok(data.query4[0]);
+            assert.ok(data.query4[0].w === 'bad');
+            assert.ok(data.query4[0].z === 541);
+
+            done();
         });
-    },
+    });
 
-    'no queries': function(test)
+    it('must retrieve an empty JSON document when being run with no queries', done =>
     {
-        test.expect(5);
+        const s2j = new S2J('test/test.sqlite');
 
+        assert.ok(s2j);
 
-        var s2j = new S2J('test/test.sqlite');
-
-
-        test.ok(s2j);
-
-
-
-        s2j.run(function(err, json)
+        s2j.run( (err, json) =>
         {
-            test.ifError(err);
-            test.ok(json);
+            assert.ifError(err);
+            assert.ok(json);
 
-            var data = JSON.parse(json);
+            const data = JSON.parse(json);
 
-            test.ok(data);
-            test.deepEqual(data, {});
+            assert.ok(data);
+            assert.deepEqual(data, {});
 
-            test.done();
+            done();
         });
-    }
-};
+    });
+});

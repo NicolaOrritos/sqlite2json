@@ -8,9 +8,6 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    nodeunit: {
-      files: ['test/**/*_test.js']
-    },
     jshint: {
       options: {
         jshintrc: '.jshintrc',
@@ -26,6 +23,13 @@ module.exports = function (grunt) {
         src: ['test/**/*.js']
       }
     },
+    mochacli: {
+      options: {
+        reporter: 'nyan',
+        bail: true
+      },
+      files: ['test/*.js']
+    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -33,15 +37,15 @@ module.exports = function (grunt) {
       },
       lib: {
         files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'nodeunit']
+        tasks: ['jshint:lib', 'mochacli']
       },
       test: {
         files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
+        tasks: ['jshint:test', 'mochacli']
       }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('default', ['jshint', 'mochacli']);
 };
