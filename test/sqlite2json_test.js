@@ -31,11 +31,10 @@ describe('sqlite2json module', () =>
         assert.ok(s2j);
 
 
-        s2j.run( (err, json) =>
+        s2j.run()
+        .then( json =>
         {
-            console.log('Got the following final JSON: %s (error is "%s")', json, err);
-
-            assert.ifError(err);
+            console.log('Got the following final JSON: %s', json);
 
             assert.ok(json);
 
@@ -71,7 +70,8 @@ describe('sqlite2json module', () =>
             assert.ok(data.query4[0].z === 541);
 
             done();
-        });
+        })
+        .catch( err => done(err) );
     });
 
     it('must retrieve an empty JSON document when being run with no queries', done =>
@@ -80,9 +80,9 @@ describe('sqlite2json module', () =>
 
         assert.ok(s2j);
 
-        s2j.run( (err, json) =>
+        s2j.run()
+        .then( json =>
         {
-            assert.ifError(err);
             assert.ok(json);
 
             const data = JSON.parse(json);
@@ -91,6 +91,7 @@ describe('sqlite2json module', () =>
             assert.deepEqual(data, {});
 
             done();
-        });
+        })
+        .catch( err => done(err) );
     });
 });
